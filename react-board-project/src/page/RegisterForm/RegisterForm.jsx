@@ -10,6 +10,7 @@ import {
   StyledLink
 } from "./RegisterForm.styled";
 import axios from "axios";
+
 const RegisterForm = ({ onRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +57,7 @@ const RegisterForm = ({ onRegister }) => {
   });
 
   onRegister({ email });
+  
 };
 
   return (
