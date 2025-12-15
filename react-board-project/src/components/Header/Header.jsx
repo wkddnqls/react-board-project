@@ -10,11 +10,11 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <Logo to={ROUTES.HOME}>당근마켓 SPA</Logo>
+      <Logo to={ROUTES.HOME}>당군마켓 SPA</Logo>
       <Nav>
         <NavLinks>
           <NavLink to={ROUTES.HOME} className={isActive(ROUTES.HOME)}>홈</NavLink>
-          <NavLink to={ROUTES.BOARD} className={isActive(ROUTES.BOARD)}>상품 목록</NavLink>
+          <NavLink to={ROUTES.BOARD} className={isActive(ROUTES.BOARD)}>게시판</NavLink>
           <NavLink to="/mypage" className={isActive('/mypage')}>마이페이지</NavLink>
         </NavLinks>
       </Nav>
