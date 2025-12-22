@@ -4,10 +4,8 @@ package com.example.project.DTO;
 import com.example.project.entity.Board;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
-public class BoardResponseDto {
+public class BoardSelectDto {
     private Long id;
     private String title;
     private String content;
@@ -16,13 +14,13 @@ public class BoardResponseDto {
     private String writerEmail;
 
 
-    public BoardResponseDto(Board board) {
+    public BoardSelectDto(Board board) {
         this.id = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();
         this.price = board.getPrice();
         this.image = board.getImage();
-        this.writerEmail = board.getWriter().getEmail();
+        this.writerEmail = board.getWriterid().getEmail();
     }
 
 }

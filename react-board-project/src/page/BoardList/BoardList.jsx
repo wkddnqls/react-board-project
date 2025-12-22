@@ -37,7 +37,7 @@ useEffect(() => {
         {posts.map(post => (
           <Item key={post.id}>
             <Link to={`/board/${post.id}`}>{post.title}</Link>
-            <span>{post.writer}</span>
+            <span>{post.writerEmail}</span>
           </Item>
         ))}
       </List>

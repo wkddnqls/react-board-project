@@ -27,7 +27,7 @@ const handleSubmit = async (e) => {
       });
 
       // 로그인 성공
-    
+      localStorage.setItem("user", JSON.stringify(res.data));
       onLogin(res.data);
       navigate("/mypage");
     } catch (err) {

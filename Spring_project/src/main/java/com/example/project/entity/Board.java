@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Board {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,17 +31,20 @@ public class Board {
     @Column
     private String image;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User writer;
+    private User writerid;
 
-    public Board(String title, String content, int price, String image, User writer) {
+    public Board(String title, String content, int price, String image, User writerid) {
         this.title = title;
         this.content = content;
         this.price = price;
         this.image = image;
-        this.writer = writer;
+        this.writerid = writerid;
     }
+
+
 
     public void update(String title, String content, int price, String image) {
         this.title = title;

@@ -40,7 +40,7 @@ export const Content = styled.p`
 
 export const Image = styled.img`
   width: 100%;
-  max-height: 380px;
+  max-height: auto;
   object-fit: cover;
   border-radius: 8px;
   margin: 1rem 0;

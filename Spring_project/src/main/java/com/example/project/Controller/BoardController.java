@@ -1,11 +1,12 @@
 package com.example.project.Controller;
 
 
-import com.example.project.DTO.BoardRequestDto;
-import com.example.project.DTO.BoardResponseDto;
+import com.example.project.DTO.BoardCreateDto;
+import com.example.project.DTO.BoardSelectDto;
 import com.example.project.Service.BoardService;
 import com.example.project.entity.Board;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,29 +20,24 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping
-    public ResponseEntity<?> createBoard(@RequestBody BoardRequestDto requestDto) {
-        try {
-            Board board = boardService.createBoard(requestDto);
-            return ResponseEntity.ok(board);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createBoard(
+            @ModelAttribute BoardCreateDto requestDto
+    ) {
+        Board board = boardService.createBoard(requestDto);
+        return ResponseEntity.ok(board);
     }
 
+
     @GetMapping
-    public List<BoardResponseDto> getBoards() {
+    public List<BoardSelectDto> getBoards() {
         List<Board> boards = boardService.getAllBoards();
         return boards.stream()
-                .map(BoardResponseDto::new)
+                .map(BoardSelectDto::new)
                 .toList();
     }
 
-    // 단일 게시글 조회
-    @GetMapping("/{id}")
-    public BoardResponseDto getBoard(@PathVariable Long id) {
-        return boardService.getBoardById(id);
-    }
+
 
     // 게시글 삭제
     @DeleteMapping("/{id}")
@@ -50,8 +46,18 @@ public class BoardController {
     }
 
     @PutMapping("/{id}")
-    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) {
+    public BoardSelectDto updateBoard(@PathVariable Long id, @RequestBody BoardCreateDto requestDto) {
         return boardService.updateBoard(id, requestDto);
     }
+
+/// //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // 단일 게시글 조회
+    @GetMapping("/{id}")
+    public BoardSelectDto getBoard(@PathVariable Long id) {
+        return boardService.getBoardById(id);
+    }
 }
+
+
 

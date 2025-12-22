@@ -16,7 +16,9 @@ const BoardWritePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+   const [preview, setPreview] = useState(null);
+
 
   const [user, setUser] = useState(null);
 
@@ -31,26 +33,50 @@ const BoardWritePage = () => {
   }, [navigate]);
 
   const handleSubmit = async () => {
-    if (!title || !content) {
-      alert("제목과 내용을 입력해주세요.");
-      return;
-    }
+  if (!title || !content) {
+    alert("제목과 내용을 입력해주세요.");
+    return;
+  }
 
-    try {
-      await api.post("/api/boards", {
-        title,
-        content,
-        image: imageUrl || null,
-        price: price ? Number(price) : null,
-        writerEmail: user.email,
-      });
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("content", content);
+  formData.append("writerEmail", user.email);
 
-      navigate("/board");
-    } catch (e) {
-      console.error(e);
-      alert("게시글 등록 실패");
-    }
+  if (price) {
+    formData.append("price", Number(price));
+  }
+
+  if (imageFile) {
+    formData.append("image", imageFile); // ⭐⭐⭐ 이름 중요
+  }
+
+  try {
+    await api.post("/api/boards", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    navigate("/board");
+  } catch (e) {
+    console.error(e);
+    alert("게시글 등록 실패");
+  }
+};
+
+  const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  setImageFile(file);
+
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setPreview(reader.result);
   };
+  reader.readAsDataURL(file);
+};
 
   if (!user) return null; // 로그인 체크 완료 전에는 화면 렌더링 방지
 
@@ -77,12 +103,13 @@ const BoardWritePage = () => {
       />
 
       <Input
-        placeholder="이미지 URL 입력 (선택)"
-        value={imageUrl}
-        onChange={e => setImageUrl(e.target.value)}
-      />
+  type="file"
+  accept="image/*"
+  onChange={handleImageChange}
+/>
+ 
+     {preview && <Preview src={preview} alt="preview" />}
 
-      {imageUrl && <Preview src={imageUrl} alt="preview" />}
 
       <ButtonBox>
         <Button onClick={handleSubmit}>등록</Button>

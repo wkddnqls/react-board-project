@@ -9,6 +9,8 @@ import {
   ButtonBox,
   Button,
 } from "./BoardEdit.styled";
+import api from "../../api/axios";
+
 const BoardEditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();

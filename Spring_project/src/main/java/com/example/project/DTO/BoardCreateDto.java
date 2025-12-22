@@ -3,14 +3,19 @@ package com.example.project.DTO;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
-@Getter
 @Setter
-public class BoardRequestDto {
+@Getter
+@NoArgsConstructor
+public class BoardCreateDto {
+
     private String title;
     private String content;
     private Integer price;
-    private String image;  // 선택적
     private String writerEmail;
+
+    private MultipartFile image;
 }

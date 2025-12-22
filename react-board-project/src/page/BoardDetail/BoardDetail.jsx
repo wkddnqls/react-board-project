@@ -52,13 +52,19 @@ const BoardDetailPage = () => {
   return (
     <Container>
       <Title>글 제목 : {post.title}</Title>
-      <Writer>작성자: {post.writer}</Writer>
+      <Writer>작성자: {post.writerEmail}</Writer>
 
       {post.price && <Price>가격: {post.price}원</Price>}
 
       <Content>내용 : {post.content}</Content>
        <Content>이미지</Content>
-      {post.image && <Image src={post.image} alt="게시글 이미지" />}
+      {post.image && (
+  <Image
+    src={`http://localhost:8888/images/${post.image}`}
+    alt="게시글 이미지"
+  />
+)}
+
 
       <DateText>작성시간: {post.createdAt}</DateText>
 

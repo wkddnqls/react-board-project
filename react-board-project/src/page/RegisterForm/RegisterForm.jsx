@@ -10,8 +10,9 @@ import {
   StyledLink
 } from "./RegisterForm.styled";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom"
 const RegisterForm = ({ onRegister }) => {
+   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -51,13 +52,21 @@ const RegisterForm = ({ onRegister }) => {
     return;
   }
 
-  await axios.post("http://localhost:8888/api/users", {
-    email,
-    password,
-  });
+  try {
+    await axios.post("http://localhost:8888/api/users", {
+      email,
+      password,
+    });
 
-  onRegister({ email });
-  
+    alert("회원가입이 완료되었습니다. 로그인해주세요.");
+
+    navigate("/");
+
+  } catch (err) {
+    setError(
+      err.response?.data?.message || "회원가입 중 오류가 발생했습니다."
+    );
+  }
 };
 
   return (
